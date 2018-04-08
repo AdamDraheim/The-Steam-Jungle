@@ -35,8 +35,8 @@ public class SquareInteract : MonoBehaviour {
         else
         {
 
-            GameMapping.map.Players[turn].GetSelectedUnit().MoveTo((int)transform.position.x, (int)transform.position.y);
-
+           GameMapping.map.Players[turn].GetSelectedUnit().MoveTo((int)transform.position.x, (int)transform.position.y);
+            
         }
     }
 }
