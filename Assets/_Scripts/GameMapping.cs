@@ -1,16 +1,24 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System;
+using UnityEngine;
 
 public class GameMapping : MonoBehaviour
 {
 
     public int sizeX;
     public int sizeY;
-    public bool[,] occupied;
+    public  bool[,] occupied;
     public int[,] teamControlled; //0 is no team, 1 is team 1, 2 is team 2
     public Unit[,] unitMap;
     public static GameMapping map;
+    public float tileOffset; //broken...It sets everything to 0 for some reason...
     public int turn = 1;
     public int numPlayers = 0;
+    public enum gameState {MOVING, PLACING};
+    public gameState gs;
+    private Stack<LocNode> path;
+    public LocNode goalNode;
+    private LocNode currentNode;
 
     public GameObject infantry;
 
@@ -39,9 +47,9 @@ public class GameMapping : MonoBehaviour
 
         Players = new Player[numPlayers];
 
-        occupied = new bool[sizeX, sizeY];
-        teamControlled = new int[sizeX, sizeY];
-        unitMap = new Unit[sizeX, sizeY];
+        occupied = new bool[sizeY, sizeX];
+        teamControlled = new int[sizeY, sizeX];
+        unitMap = new Unit[sizeY, sizeX];
         turn = 0;
 
         Players[0] = new HumanControl();
@@ -61,12 +69,40 @@ public class GameMapping : MonoBehaviour
             Players[unitAdded.team].AddUnit(unitAdded);
         }
 
-
+        gs = gameState.MOVING;
+        tileOffset = 1f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (gs == gameState.PLACING)
+        {
+            if (path == null)
+            {
+                path = map.Players[turn].GetSelectedUnit().getPath(goalNode.row, goalNode.column);
+            }
+            Debug.Log(map.Players[turn].GetSelectedUnit().transform.position.x != goalNode.x || map.Players[turn].GetSelectedUnit().transform.position.y != goalNode.y);
+            if (map.Players[turn].GetSelectedUnit().transform.position.x != goalNode.x || map.Players[turn].GetSelectedUnit().transform.position.y != goalNode.y)
+            {
+                if (currentNode == null)
+                {
+                    currentNode = path.Pop();
+                }
+                map.Players[turn].GetSelectedUnit().moveToPoint(currentNode.x, currentNode.y);
+                if (map.Players[turn].GetSelectedUnit().transform.position.x == currentNode.x && map.Players[turn].GetSelectedUnit().transform.position.y == currentNode.y)
+                {
+                    currentNode = null;
+                }
+            }
+            if (map.Players[turn].GetSelectedUnit().transform.position.x == goalNode.x && map.Players[turn].GetSelectedUnit().transform.position.y == goalNode.y)
+            {
+                map.Players[turn].GetSelectedUnit().placeUnit((map.unitMap.GetLength(0) - 1) - (int)transform.position.y, (int)transform.position.x);
+                path = null;
+                currentNode = null;
+                map.gs = gameState.MOVING;
+            }
+        }
 
     }
 
@@ -126,8 +162,8 @@ public class GameMapping : MonoBehaviour
     {
         
         Players[team].AddUnit(unit);
-        occupied[(int)unit.transform.position.x, (int)unit.transform.position.y] = true;
-        unitMap[(int)unit.transform.position.x, (int)unit.transform.position.y] = unit;
+        occupied[unit.row, unit.column] = true;
+        unitMap[unit.row, unit.column] = unit;
 
     }
 

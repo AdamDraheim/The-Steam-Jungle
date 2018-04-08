@@ -17,7 +17,10 @@ public class SpawnPoint : MonoBehaviour {
 
         Unit addedUnit = Instantiate(toPlace, new Vector3(transform.position.x, transform.position.y, -5), new Quaternion(0,0,0,0));
         addedUnit.SetTeam(team);
-
+        addedUnit.row = (GameMapping.map.unitMap.GetLength(0) - 1) - (int)transform.position.y;
+        addedUnit.column = (int)transform.position.x;
+        addedUnit.setWalkRangeGrid();
+        addedUnit.setActionRangeGrid(addedUnit.minRng, addedUnit.maxRng, addedUnit.row, addedUnit.column, 5);
         GameMapping.map.AddUnit(team, addedUnit);
 
         Destroy(this.gameObject);

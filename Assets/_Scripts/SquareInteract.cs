@@ -20,23 +20,35 @@ public class SquareInteract : MonoBehaviour {
 
     public void IsClicked()
     {
-        int turn = GameMapping.map.turn;
-        if (GameMapping.map.Players[turn].GetSelectedUnit() == null) {
-            
-            GameMapping.map.Players[turn].SelectedUnit(GameMapping.map.unitMap[(int)transform.position.x, (int)transform.position.y]);
-
-
-            //If enemy unit sets selected back to null
-            if(GameMapping.map.Players[turn].GetSelectedUnit() != null && GameMapping.map.Players[turn].GetSelectedUnit().team != turn)
-            {
-                GameMapping.map.Players[turn].SelectedUnit(null);
-            }
-        }
-        else
+        if (GameMapping.map.gs == GameMapping.gameState.MOVING)
         {
+            int turn = GameMapping.map.turn;
+            if (GameMapping.map.Players[turn].GetSelectedUnit() == null)
+            {
 
+                GameMapping.map.Players[turn].SelectedUnit(GameMapping.map.unitMap[(GameMapping.map.unitMap.GetLength(0) - 1) - (int)transform.position.y, (int)transform.position.x]);
+
+
+<<<<<<< HEAD
            GameMapping.map.Players[turn].GetSelectedUnit().MoveTo((int)transform.position.x, (int)transform.position.y);
             
+=======
+                //If enemy unit sets selected back to null
+                if (GameMapping.map.Players[turn].GetSelectedUnit() != null && GameMapping.map.Players[turn].GetSelectedUnit().team != turn)
+                {
+                    GameMapping.map.Players[turn].SelectedUnit(null);
+                }
+            }
+            else
+            {
+                if (GameMapping.map.Players[turn].GetSelectedUnit().isInWalkingRange((GameMapping.map.unitMap.GetLength(0) - 1) - (int)transform.position.y, (int)transform.position.x))
+                {
+                    GameMapping.map.goalNode = GameMapping.map.Players[turn].GetSelectedUnit().getWalkGrid().getNode((GameMapping.map.unitMap.GetLength(0) - 1) - (int)transform.position.y, (int)transform.position.x);
+                    GameMapping.map.gs = GameMapping.gameState.PLACING;
+                }
+
+            }
+>>>>>>> f28831196efc1aeea71f0fb58e6225d4ec9b7702
         }
     }
 }

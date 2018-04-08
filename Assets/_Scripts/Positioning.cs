@@ -30,7 +30,7 @@ public class Positioning {
         return false;
     }
 
-    public static int SquaresAdvanced(int PosX, int PosY, int origLocX, int OrigLocY, int enemyPosX, int enemyPosY)
+    public static int SquaresAdvanced(int PosX, int PosY, int origLocX, int origLocY, int enemyPosX, int enemyPosY)
     {
 
         int dirX = (enemyPosX - PosX) / Mathf.Abs((enemyPosX - PosX));
@@ -38,7 +38,7 @@ public class Positioning {
 
 
         int changeX = (PosX - origLocX) / dirX;
-        int changeY = (PosY - OrigLocY) / dirY;
+        int changeY = (PosY - origLocY) / dirY;
 
         return changeX + changeY;
     }
