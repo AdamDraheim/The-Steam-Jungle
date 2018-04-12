@@ -83,7 +83,6 @@ public class GameMapping : MonoBehaviour
         {
             selectedSquare.SetColor(new Color(200, 200, 0, 100));
         }
-        Debug.Log(gs);
         switch (gs)
         {
             case gameState.MOVING: //when the game is moving units
