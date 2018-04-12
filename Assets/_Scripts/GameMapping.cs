@@ -29,11 +29,13 @@ public class GameMapping : MonoBehaviour
 
     public Player[] Players;
 
+    public SquareInteract selectedSquare;
+
 
     // Use this for initialization
     void Start()
     {
-
+        selectedSquare = null;
         if (map == null)
         {
             map = this;
@@ -76,6 +78,12 @@ public class GameMapping : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(selectedSquare != null)
+        {
+            selectedSquare.SetColor(new Color(200, 200, 0, 100));
+        }
+        Debug.Log(gs);
         switch (gs)
         {
             case gameState.MOVING: //when the game is moving units
@@ -111,6 +119,15 @@ public class GameMapping : MonoBehaviour
                 break;
         }
 
+    }
+
+    public void ChangeSelected(SquareInteract square)
+    {
+        if (selectedSquare != null)
+        {
+            selectedSquare.ResetColor();
+        }
+        selectedSquare = square;
     }
 
     public void NextTurn()

@@ -12,7 +12,7 @@ public class Infantry : Unit {
         spd = Random.Range(3, 8);
         mvt = 3;
         minRng = 1;
-        maxRng = 2;
+        maxRng = 4;
         active = true;
         isAttacker = true;
         isHealer = false;

@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class SquareInteract : MonoBehaviour {
 
-	// Use this for initialization
+    // Use this for initialization
+    SpriteRenderer sr;
+    private Color start;
+
 	void Start () {
-		
+        sr = gameObject.GetComponent<SpriteRenderer>();
+        start = sr.color;
 	}
 	
 	// Update is called once per frame
@@ -27,18 +31,7 @@ public class SquareInteract : MonoBehaviour {
             {
 
                 GameMapping.map.Players[turn].SelectedUnit(GameMapping.map.unitMap[(GameMapping.map.unitMap.GetLength(0) - 1) - (int)transform.position.y, (int)transform.position.x]);
-<<<<<<< HEAD
-
-
-           GameMapping.map.Players[turn].GetSelectedUnit().MoveTo((int)transform.position.x, (int)transform.position.y);
-=======
->>>>>>> e5b146402120a7ad5fd6cfcf05b7a78e13d68b20
-            
-                //If enemy unit sets selected back to null
-                if (GameMapping.map.Players[turn].GetSelectedUnit() != null && GameMapping.map.Players[turn].GetSelectedUnit().team != turn)
-                {
-                    GameMapping.map.Players[turn].SelectedUnit(null);
-                }
+                GameMapping.map.ChangeSelected(this);
             }
             else
             {
@@ -46,9 +39,20 @@ public class SquareInteract : MonoBehaviour {
                 {
                     GameMapping.map.goalNode = GameMapping.map.Players[turn].GetSelectedUnit().getWalkGrid().getNode((GameMapping.map.unitMap.GetLength(0) - 1) - (int)transform.position.y, (int)transform.position.x);
                     GameMapping.map.gs = GameMapping.gameState.PLACING;
+                    GameMapping.map.ChangeSelected(null);
                 }
 
             }
         }
+    }
+
+    public void SetColor(Color color)
+    {
+        sr.color = color;
+    }
+
+    public void ResetColor()
+    {
+        sr.color = start;
     }
 }
