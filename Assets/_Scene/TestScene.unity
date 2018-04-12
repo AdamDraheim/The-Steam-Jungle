@@ -8898,6 +8898,88 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1001 &1660279814
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4532572140017670, guid: c173f617592ce5845acf47b88baf2b25, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4532572140017670, guid: c173f617592ce5845acf47b88baf2b25, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4532572140017670, guid: c173f617592ce5845acf47b88baf2b25, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4532572140017670, guid: c173f617592ce5845acf47b88baf2b25, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4532572140017670, guid: c173f617592ce5845acf47b88baf2b25, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4532572140017670, guid: c173f617592ce5845acf47b88baf2b25, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4532572140017670, guid: c173f617592ce5845acf47b88baf2b25, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4532572140017670, guid: c173f617592ce5845acf47b88baf2b25, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114250383107089580, guid: c173f617592ce5845acf47b88baf2b25,
+        type: 2}
+      propertyPath: toPlace
+      value: 
+      objectReference: {fileID: 114055638156988952, guid: 591a4ace7dc8d084b951a7099e677440,
+        type: 2}
+    - target: {fileID: 114250383107089580, guid: c173f617592ce5845acf47b88baf2b25,
+        type: 2}
+      propertyPath: mapX
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114250383107089580, guid: c173f617592ce5845acf47b88baf2b25,
+        type: 2}
+      propertyPath: mapY
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114250383107089580, guid: c173f617592ce5845acf47b88baf2b25,
+        type: 2}
+      propertyPath: team
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212270099823201772, guid: c173f617592ce5845acf47b88baf2b25,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 212270099823201772, guid: c173f617592ce5845acf47b88baf2b25,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.13103437
+      objectReference: {fileID: 0}
+    - target: {fileID: 212270099823201772, guid: c173f617592ce5845acf47b88baf2b25,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427009953274342, guid: c173f617592ce5845acf47b88baf2b25, type: 2}
+      propertyPath: m_Name
+      value: Spawn Point (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: c173f617592ce5845acf47b88baf2b25, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1662282420
 GameObject:
   m_ObjectHideFlags: 0
@@ -9916,6 +9998,7 @@ MonoBehaviour:
   tileOffset: 0
   turn: 1
   numPlayers: 2
+  gs: 0
   infantry: {fileID: 1952427537107676, guid: 591a4ace7dc8d084b951a7099e677440, type: 2}
   square: {fileID: 1887372934449240, guid: 57271a2aed6717a45836cfdb07e8f765, type: 2}
 --- !u!1 &1827428025
