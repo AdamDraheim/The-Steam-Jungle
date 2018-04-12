@@ -11,11 +11,11 @@ public class GameMapping : MonoBehaviour
     public int[,] teamControlled; //0 is no team, 1 is team 1, 2 is team 2
     public Unit[,] unitMap;
     public static GameMapping map;
-    public float tileOffset; //broken...It sets everything to 0 for some reason...
+    public float tileOffset = 1f; //broken...It sets everything to 0 for some reason...
     public int turn = 1;
     public int numPlayers = 0;
-    public enum gameState {MOVING, PLACING};
-    public gameState gs;
+    public enum gameState {MOVING, PLACING, ATTACKING};
+    public gameState gs = gameState.MOVING;
     private Stack<LocNode> path;
     public LocNode goalNode;
     private LocNode currentNode;
@@ -76,32 +76,39 @@ public class GameMapping : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gs == gameState.PLACING)
+        switch (gs)
         {
-            if (path == null)
-            {
-                path = map.Players[turn].GetSelectedUnit().getPath(goalNode.row, goalNode.column);
-            }
-            Debug.Log(map.Players[turn].GetSelectedUnit().transform.position.x != goalNode.x || map.Players[turn].GetSelectedUnit().transform.position.y != goalNode.y);
-            if (map.Players[turn].GetSelectedUnit().transform.position.x != goalNode.x || map.Players[turn].GetSelectedUnit().transform.position.y != goalNode.y)
-            {
-                if (currentNode == null)
+            case gameState.MOVING: //when the game is moving units
+                //does nothing
+                break;
+            case gameState.PLACING: //when the game is placing units
+                if (path == null)
                 {
-                    currentNode = path.Pop();
+                    path = map.Players[turn].GetSelectedUnit().getPath(goalNode.row, goalNode.column);
                 }
-                map.Players[turn].GetSelectedUnit().moveToPoint(currentNode.x, currentNode.y);
-                if (map.Players[turn].GetSelectedUnit().transform.position.x == currentNode.x && map.Players[turn].GetSelectedUnit().transform.position.y == currentNode.y)
+                Debug.Log(map.Players[turn].GetSelectedUnit().transform.position.x != goalNode.x || map.Players[turn].GetSelectedUnit().transform.position.y != goalNode.y);
+                if (map.Players[turn].GetSelectedUnit().transform.position.x != goalNode.x || map.Players[turn].GetSelectedUnit().transform.position.y != goalNode.y)
                 {
+                    if (currentNode == null)
+                    {
+                        currentNode = path.Pop();
+                    }
+                    map.Players[turn].GetSelectedUnit().moveToPoint(currentNode.x, currentNode.y);
+                    if (map.Players[turn].GetSelectedUnit().transform.position.x == currentNode.x && map.Players[turn].GetSelectedUnit().transform.position.y == currentNode.y)
+                    {
+                        currentNode = null;
+                    }
+                }
+                if (map.Players[turn].GetSelectedUnit().transform.position.x == goalNode.x && map.Players[turn].GetSelectedUnit().transform.position.y == goalNode.y)
+                {
+                    map.Players[turn].GetSelectedUnit().placeUnit((map.unitMap.GetLength(0) - 1) - (int)transform.position.y, (int)transform.position.x);
+                    path = null;
                     currentNode = null;
+                    map.gs = gameState.MOVING;
                 }
-            }
-            if (map.Players[turn].GetSelectedUnit().transform.position.x == goalNode.x && map.Players[turn].GetSelectedUnit().transform.position.y == goalNode.y)
-            {
-                map.Players[turn].GetSelectedUnit().placeUnit((map.unitMap.GetLength(0) - 1) - (int)transform.position.y, (int)transform.position.x);
-                path = null;
-                currentNode = null;
-                map.gs = gameState.MOVING;
-            }
+                break;
+            case gameState.ATTACKING: //when a unit is attacking another unit
+                break;
         }
 
     }
