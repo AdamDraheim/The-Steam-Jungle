@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Player{
 
     public Unit[] unitList = new Unit[10];
+    private int size = 0;
 
     private Unit selectedUnit;
 
@@ -20,6 +21,7 @@ public abstract class Player{
                 break;
             }
         }
+        size++;
     }
 
     public int GetSpec()
@@ -37,6 +39,26 @@ public abstract class Player{
     public void SelectedUnit(Unit unit)
     {
         selectedUnit = unit;
+    }
+
+    public bool AllUnactive()
+    {
+        for (int i = 0; i < size; i++)
+        {
+            if (unitList[i].active)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void SetAllActive()
+    {
+        for (int i = 0; i < size; i++)
+        {
+            unitList[i].active = true;
+        }
     }
 
     public Unit GetSelectedUnit()

@@ -31,6 +31,17 @@ public class SquareInteract : MonoBehaviour {
             {
 
                 GameMapping.map.Players[turn].SelectedUnit(GameMapping.map.unitMap[(GameMapping.map.unitMap.GetLength(0) - 1) - (int)transform.position.y, (int)transform.position.x]);
+            
+                //If enemy unit sets selected back to null
+                if (GameMapping.map.Players[turn].GetSelectedUnit() != null && GameMapping.map.Players[turn].GetSelectedUnit().team != turn)
+                {
+                    GameMapping.map.Players[turn].SelectedUnit(null);
+                }
+
+                if (GameMapping.map.Players[turn].GetSelectedUnit() != null && !GameMapping.map.Players[turn].GetSelectedUnit().active)
+                {
+                    GameMapping.map.Players[turn].SelectedUnit(null);
+                }
                 GameMapping.map.ChangeSelected(this);
             }
             else

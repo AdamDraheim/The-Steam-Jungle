@@ -70,14 +70,12 @@ public class GameMapping : MonoBehaviour
             Unit unitAdded = spawnPoints[i].GetComponent<SpawnPoint>().AddUnit();
             Players[unitAdded.team].AddUnit(unitAdded);
         }
-
-        gs = gameState.MOVING;
-        tileOffset = 1f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(gs);
 
         if(selectedSquare != null)
         {
@@ -93,7 +91,6 @@ public class GameMapping : MonoBehaviour
                 {
                     path = map.Players[turn].GetSelectedUnit().getPath(goalNode.row, goalNode.column);
                 }
-                Debug.Log(map.Players[turn].GetSelectedUnit().transform.position.x != goalNode.x || map.Players[turn].GetSelectedUnit().transform.position.y != goalNode.y);
                 if (map.Players[turn].GetSelectedUnit().transform.position.x != goalNode.x || map.Players[turn].GetSelectedUnit().transform.position.y != goalNode.y)
                 {
                     if (currentNode == null)
@@ -108,9 +105,16 @@ public class GameMapping : MonoBehaviour
                 }
                 if (map.Players[turn].GetSelectedUnit().transform.position.x == goalNode.x && map.Players[turn].GetSelectedUnit().transform.position.y == goalNode.y)
                 {
-                    map.Players[turn].GetSelectedUnit().placeUnit((map.unitMap.GetLength(0) - 1) - (int)transform.position.y, (int)transform.position.x);
+                    map.Players[turn].GetSelectedUnit().placeUnit(goalNode.row, goalNode.column);
+                    map.Players[turn].GetSelectedUnit().active = false;
                     path = null;
                     currentNode = null;
+                    map.Players[turn].SelectedUnit(null);
+                    if (map.Players[turn].AllUnactive())
+                    {
+                        NextTurn();
+                    }
+                    GameMapping.map.ChangeSelected(null);
                     map.gs = gameState.MOVING;
                 }
                 break;
@@ -147,9 +151,11 @@ public class GameMapping : MonoBehaviour
             turn = 0;
         }
 
+        map.Players[turn].SetAllActive();
+
         Player playerToMove = Players[turn];
 
-        if (playerToMove.GetSpec() == 0)
+        if (playerToMove.GetSpec() == 1)
         {
            playerToMove.performAction();
         }

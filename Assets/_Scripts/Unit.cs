@@ -82,6 +82,26 @@ public class Unit : MonoBehaviour {
         return stack;
     }
 
+    public void SetColor(int _team)
+    {
+        SpriteRenderer sr = this.gameObject.GetComponent<SpriteRenderer>();
+        Color color = new Color(0, 0, 0);
+        switch (_team)
+        {
+            case 0:
+                color = new Color(255, 0, 0);
+                break;
+            case 1:
+                color = new Color(0, 0, 255);
+                break;
+            case 2:
+                color = new Color(0, 255, 0);
+                break;
+        }
+
+        sr.color = color;
+    }
+
     public void moveToPoint(float nextX, float nextY)
     {
         if (transform.position.x < nextX - 0.005f || transform.position.x > nextX + 0.005f)
@@ -121,6 +141,7 @@ public class Unit : MonoBehaviour {
         GameMapping.map.unitMap[row, column] = null;
         row = _row;
         column = _col;
+        Debug.Log("Row: " + row + " Column: " + column);
         GameMapping.map.occupied[row, column] = true;
         GameMapping.map.unitMap[row, column] = this;
         setWalkRangeGrid();
